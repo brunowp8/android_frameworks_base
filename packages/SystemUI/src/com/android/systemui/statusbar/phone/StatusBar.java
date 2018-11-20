@@ -5488,10 +5488,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
-                     Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PULSE_APPS_BLACKLIST),
+                    Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS),
                     false, this, UserHandle.USER_ALL);
 	        resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BATTERY_SAVER_DARK_MODE),
@@ -5537,13 +5534,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 	        } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS))) {
 	            setFpToDismissNotifications();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.PULSE_APPS_BLACKLIST))) {
-                setPulseBlacklist();
-	    } else if (uri.equals(Settings.System.getUriFor(
-		    Settings.System.BATTERY_SAVER_DARK_MODE))) {
-		// If the batterysaver is already turned on act accordingly
-		updateBatterySaverDarkMode();
+	        } else if (uri.equals(Settings.System.getUriFor(
+		            Settings.System.BATTERY_SAVER_DARK_MODE))) {
+		        // If the batterysaver is already turned on act accordingly
+		        updateBatterySaverDarkMode();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_TICKER_ANIMATION_MODE))) {
                 updateTickerAnimation();
@@ -5576,10 +5570,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             TelephonyIcons.updateIcons(USE_OLD_MOBILETYPE);
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
-            updateTheme();
             setQsPanelOptions();
             setFpToDismissNotifications();
-            setPulseBlacklist();
             setLockscreenMediaMetadata();
             setLockscreenDoubleTapToSleep();
             setStatusDoubleTapToSleep();
@@ -5587,6 +5579,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerAnimation();
             updateTickerTickDuration();
             setUseLessBoringHeadsUp();
+            updateTheme();
         }
     }
 
@@ -5658,12 +5651,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFpDismissNotifications = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                 Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS, 0,
                 UserHandle.USER_CURRENT) == 1;
-    }
-
-    private void setPulseBlacklist() {
-        String blacklist = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_APPS_BLACKLIST, UserHandle.USER_CURRENT);
-        getMediaManager().setPulseBlacklist(blacklist);
     }
 
     private void setUseLessBoringHeadsUp() {
